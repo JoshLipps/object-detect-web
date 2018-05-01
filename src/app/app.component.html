@@ -5,7 +5,7 @@
   </h1>
 
   <div class="top">
-    <img height="224" alt="Image" id="image" src="{{src}}">
+    <img height="224" alt="Image" id="image" [src]="src" (load)="analyze()">
     <mat-table [dataSource]="topClasses">
       <ng-container matColumnDef="label">
         <mat-header-cell *matHeaderCellDef> Class </mat-header-cell>

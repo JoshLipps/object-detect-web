@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 
 import * as tf from '@tensorflow/tfjs-core';
 import {MobileNet} from '../lib/mobilenet';
+import { resolve } from 'path';
 
 interface FileReaderEventTarget extends EventTarget {
   result: string;
@@ -36,8 +37,8 @@ export class AppComponent implements OnInit {
   async ngOnInit() {
     await this.mn.load();
     this.imageElement = document.getElementById('image') as HTMLImageElement;
-    console.log('imageElement', this.imageElement);
     this.isRunning = true;
+    this.analyze();
   }
 
   updateImage(event) {
@@ -79,4 +80,10 @@ export class AppComponent implements OnInit {
       console.log('topClasses', this.topClasses);
     }
   }
+}
+
+async function wait(delay: number|undefined): Promise<any> {
+  return new Promise((res) => {
+    setTimeout(resolve, delay);
+  });
 }
