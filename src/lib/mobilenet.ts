@@ -20,11 +20,9 @@ import * as tfc from '@tensorflow/tfjs-core';
 import {loadFrozenModel, FrozenModel} from '@tensorflow/tfjs-converter';
 import {SCAVENGER_CLASSES} from './scavenger_classes';
 
-// import * as tf from '@tensorflow/tfjs';
-
-// const model = await tf.loadModel('https://foo.bar/tfjs_artifacts/model.json');
-
-type TensorMap = {[name: string]: tfc.Tensor};
+interface TensorMap {
+  [name: string]: tfc.Tensor;
+}
 
 const MODEL_FILE_URL = '/assets/model/web_model.pb';
 const WEIGHT_MANIFEST_FILE_URL = '/assets/model/weights_manifest.json';

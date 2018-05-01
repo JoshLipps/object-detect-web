@@ -5,12 +5,12 @@ import * as tf from '@tensorflow/tfjs-core';
 import {MobileNet} from '../lib/mobilenet';
 
 interface FileReaderEventTarget extends EventTarget {
-  result:string
+  result: string;
 }
 
-interface FileReaderEvent extends Event {
+interface FileReaderEvent extends ProgressEvent {
   target: FileReaderEventTarget;
-  getMessage():string;
+  getMessage(): string;
 }
 
 @Component({
@@ -19,43 +19,43 @@ interface FileReaderEvent extends Event {
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-  // title = 'app';
-  /** ts-lint max-line-length=false */
+  static VIDEO_PIXELS = 224;
+
   mn: MobileNet;
   isRunning: boolean;
-  static VIDEO_PIXELS = 224;
   topClasses: {label: string, value: any}[];
   imageElement: HTMLImageElement;
+  displayedColumns = ['label', 'value'];
 
   src = '/assets/cat.jpeg';
 
-  constructor(){
+  constructor() {
     this.mn = new MobileNet();
   }
 
   async ngOnInit() {
-    // this.logIt(`OnInit`);
     await this.mn.load();
     this.imageElement = document.getElementById('image') as HTMLImageElement;
-    console.log('imageElement', this.imageElement)
+    console.log('imageElement', this.imageElement);
     this.isRunning = true;
   }
 
-  updateImage(event){
-    var selectedFile = event.target.files[0];
-    var reader = new FileReader();
+  updateImage(event) {
+    const selectedFile = event.target.files[0];
+    const reader = new FileReader();
 
     // var imgtag = document.getElementById("myimage");
     // imgtag.title = selectedFile.name;
 
-    reader.onload = (event: any) => {
-      this.src = event.target.result ? event.target.result:  null;
+    reader.onload = (ev: FileReaderEvent) => {
+      // console.log(ev)
+      this.src = ev.target.result;
     };
 
     reader.readAsDataURL(selectedFile);
   }
 
-  async analyze(){
+  async analyze() {
     if (this.isRunning) {
 
       const result = tf.tidy(() => {
@@ -75,8 +75,8 @@ export class AppComponent implements OnInit {
 
       // This call retrieves the topK matches from our MobileNet for the
       // provided image data.
-      this.topClasses = await this.mn.getTopKClasses(result, 10);
-      console.log('topClasses',this.topClasses);
+      this.topClasses = await this.mn.getTopKClasses(result, 5);
+      console.log('topClasses', this.topClasses);
     }
   }
 }

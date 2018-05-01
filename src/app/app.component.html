@@ -3,11 +3,27 @@
   <h1>
     Welcome
   </h1>
-  <img height="224" alt="Angular Logo" id="image" src="{{src}}">
 
+  <div class="top">
+    <img height="224" alt="Image" id="image" src="{{src}}">
+    <mat-table [dataSource]="topClasses">
+      <ng-container matColumnDef="label">
+        <mat-header-cell *matHeaderCellDef> Class </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.label}} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="value">
+        <mat-header-cell *matHeaderCellDef> Confedence </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.value}} </mat-cell>
+      </ng-container>
+
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    </mat-table>
+  </div>
 </div>
 <div class="controls">
   <input type="file" (change)="updateImage($event)" >
-  <button type="button" (click)="analyze()">Analyze</button>
+  <button mat-raised-button (click)="analyze()">Analyze</button>
 </div>
 
