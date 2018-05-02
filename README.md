@@ -2,6 +2,11 @@
 
 Project to play around with the TensorFlowJs
 
+### TODO
+[ ] Training of Data set
+[ ] Live view running on model
+[ ] Draw all the moxes
+
 ## Development server
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.

@@ -1,12 +1,14 @@
 <!--The content below is only a placeholder and can be replaced.-->
-<div style="text-align:center">
-  <h1>
-    Welcome
-  </h1>
+<div class="container" style="text-align:center">
+  <h1></h1>
 
   <div class="top">
-    <img height="224" alt="Image" id="image" [src]="src" (load)="analyze()">
-    <mat-table [dataSource]="topClasses">
+
+    <mat-card>
+        <img height="224" alt="Image" id="image" [src]="src" (load)="analyze()">
+    </mat-card>
+
+    <mat-table [dataSource]="topClasses" *ngIf="topClasses">
       <ng-container matColumnDef="label">
         <mat-header-cell *matHeaderCellDef> Class </mat-header-cell>
         <mat-cell *matCellDef="let element"> {{element.label}} </mat-cell>
@@ -14,16 +16,17 @@
 
       <ng-container matColumnDef="value">
         <mat-header-cell *matHeaderCellDef> Confedence </mat-header-cell>
-        <mat-cell *matCellDef="let element"> {{element.value}} </mat-cell>
+        <mat-cell *matCellDef="let element"> {{element.value|percent:'1.0-4'}} </mat-cell>
       </ng-container>
 
       <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
       <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
     </mat-table>
   </div>
-</div>
-<div class="controls">
-  <input type="file" (change)="updateImage($event)" >
-  <button mat-raised-button (click)="analyze()">Analyze</button>
+
+  <div class="controls">
+    <input type="file"  #file (change)="updateImage($event)" >
+    <button mat-raised-button (click)="file.click()">Upload file</button>
+  </div>
 </div>
 
